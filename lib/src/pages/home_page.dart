@@ -13,18 +13,22 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home '),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Text('INFORMACION DEL USER',
-              style: TextStyle( fontWeight: FontWeight.bold ),   
-            ),
-            SizedBox(height: 20.0),
-            Text('Correo: ${ bloc.email }'),
-            Text('Contraseña: ${ bloc.contrasena }')
-          ],
-        ),
+      body: Container(
+
       ),
+      floatingActionButton: _btnNavegaNuevoProducto( context ),
     );
   }
+
+
+  Widget _btnNavegaNuevoProducto(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add ),
+      backgroundColor: Colors.deepPurple,
+      onPressed: () => Navigator.pushNamed(context, 'producto') 
+    );
+  }
+
+
+
 }

@@ -3,6 +3,7 @@ import 'package:form_bloc/src/bloc/provider.dart';
 
 import 'package:form_bloc/src/pages/home_page.dart';
 import 'package:form_bloc/src/pages/login_page.dart';
+import 'package:form_bloc/src/pages/producto_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -18,10 +19,11 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.deepPurple
         ),
         //home: Text('Cuerpo')
-        initialRoute: 'login',
+        initialRoute: 'home',
         routes: {
-          'login': (BuildContext context ) => LoginPage(),
-          'home': (BuildContext context ) => Home(),
+          'login'     : (BuildContext context ) => LoginPage(),
+          'home'      : (BuildContext context ) => Home(),
+          'producto'  : (BuildContext context ) => ProductoPage(),
         },
       )
     );
