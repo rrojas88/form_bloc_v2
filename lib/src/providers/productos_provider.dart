@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 import 'package:mime_type/mime_type.dart';
+import 'package:form_bloc/src/providers/preferences_user.dart';
 
 import 'package:form_bloc/src/providers/config.dart';
 import 'package:form_bloc/src/models/producto_model.dart';
@@ -12,11 +13,12 @@ import 'package:form_bloc/src/models/producto_model.dart';
 class ProductosProvider {
 
   final _urlBase = Config.urlBase;
+  final _prefs = new PreferenciasUsuario();
 
 
   Future<bool> createProduct( ProductoModel producto ) async {
 
-    final url = '$_urlBase/productos.json';
+    final url = '$_urlBase/productos.json?auth=${ _prefs.token }';
 
     final resp = await http.post(url, body: productoModelToJson(producto) );
 
@@ -30,7 +32,7 @@ class ProductosProvider {
 
   Future<List<ProductoModel>> loadProducts () async {
 
-    final url = '$_urlBase/productos.json';
+    final url = '$_urlBase/productos.json?auth=${ _prefs.token }';
     final resp = await http.get(url  );
 
     /// Decodifico el STRING a Objeto JSON en DART
@@ -57,7 +59,7 @@ class ProductosProvider {
 
   Future<int> deleteProduct( String id ) async {
 
-    final url = '$_urlBase/productos/$id.json';
+    final url = '$_urlBase/productos/$id.json?auth=${ _prefs.token }';
     final resp = await http.delete( url );
 
     //final decodedData = json.decode( resp.body );

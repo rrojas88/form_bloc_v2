@@ -3,17 +3,14 @@ import 'package:form_bloc/src/utils/utils.dart' as utils;
 import 'package:form_bloc/src/bloc/provider.dart';
 import 'package:form_bloc/src/providers/usuario_provider.dart';
 
-class LoginPage extends StatelessWidget {
-  //const LoginPage({Key key}) : super(key: key);
+class RegistroPage extends StatelessWidget {
+  //const RegistroPage({Key key}) : super(key: key);
 
   final usuarioProvider = new UsuarioProvider();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text('Pagina Login '),
-      ),*/
       body: Stack(
         children: <Widget>[
           _crearFondo( context ),
@@ -120,7 +117,7 @@ class LoginPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Acesso',
+                Text('Registro',
                   style: TextStyle(
                     fontSize: 20.0
                   ),
@@ -225,28 +222,27 @@ class LoginPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 80.0),
             child: Text('Ingresar'),
           ),
-          onPressed: snapshot.hasData ? () => _login( bloc, context ) : null,
+          onPressed: snapshot.hasData ? () => _registrar( bloc, context ) : null,
         );
       },
     );
   }
 
 
-  _login( LoginBloc bloc, BuildContext context ) async {
+  _registrar( LoginBloc bloc, BuildContext context ) async {
     print('===========');
     print('Email: ${bloc.email}');
     print('Contraseña: ${bloc.contrasena}');
 
-    Map result = await usuarioProvider.login(bloc.email, bloc.contrasena);
+    Map result = await usuarioProvider.nuevoUsuario(bloc.email, bloc.contrasena);
 
     if( result['error'] ){
       String mensaje = result['mensaje'];
       utils.mostrarAlerta( context, mensaje);
     }
     else{
-      Navigator.pushReplacementNamed(context, 'home');
+      Navigator.pushReplacementNamed(context, 'login');
     }
-
   }
 
 
