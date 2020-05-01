@@ -44,6 +44,14 @@ class ProductosProvider {
     
     if( decodedData == null ) return [];
 
+    if( decodedData['error'] != null ){
+      print('*** *** *** Error por TOKEN ?? *******');
+      print( decodedData );
+      /// Mostrar error de Expiracion o regresar al Login
+      
+      return [];
+    }
+
     /// Transformando a Instancias de Producto los registros separados (llegados desde Firebase)
     decodedData.forEach((id, prod ){
 

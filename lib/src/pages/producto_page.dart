@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:form_bloc/src/providers/productos_provider.dart';
-import 'package:form_bloc/src/utils/utils.dart' as utils;
-import 'package:form_bloc/src/models/producto_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:form_bloc/src/utils/utils.dart' as utils;
+
+import 'package:form_bloc/src/bloc/provider.dart';
+//import 'package:form_bloc/src/providers/productos_provider.dart';
+import 'package:form_bloc/src/models/producto_model.dart';
 
 class ProductoPage extends StatefulWidget {
   //const ProductoPage({Key key}) : super(key: key);
@@ -20,7 +21,8 @@ class _ProductoPageState extends State<ProductoPage> {
 
   bool _guardando = false;
 
-  final productoProvider = new ProductosProvider();
+  ProductosBloc productosBloc;
+  //final productoProvider = new ProductosProvider();
   ProductoModel producto = new ProductoModel();
 
   File foto;
@@ -28,6 +30,8 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    productosBloc = Provider.productosBloc(context);
 
 
     final ProductoModel prodData = ModalRoute.of(context).settings.arguments;
@@ -151,20 +155,20 @@ class _ProductoPageState extends State<ProductoPage> {
 
     /// Subir Imagen
     if( foto != null ){
-      producto.url = await productoProvider.uploadImage( foto );
+      producto.url = await productosBloc.subirArchivo( foto );
 
     }
 
     if( producto.id == null )
-      productoProvider.createProduct(producto);
+      productosBloc.agregarProducto(producto);
     else
-      productoProvider.updateProduct(producto);
+      productosBloc.editarProducto(producto);
 
     setState(() {
       // _guardando = false;
     });
 
-    mostrarSnackbar( 'Registro guardado' );
+    mostrarSnackbar( 'Registro guardado !' );
 
     Navigator.pop(context);
   }
